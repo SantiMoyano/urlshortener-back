@@ -23,4 +23,9 @@ public class UrlService {
     private String generateShortUrl() {
         return UUID.randomUUID().toString().substring(0, 8);
     }
+
+    public String getLongUrl(String shortUrl) {
+        Url url = urlRepository.findByShortUrl(shortUrl);
+        return (url != null) ? url.getLongUrl() : null;
+    }
 }

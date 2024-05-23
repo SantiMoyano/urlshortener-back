@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/api/shorty")
@@ -17,4 +18,13 @@ public class UrlController {
         return new ResponseEntity<String>(urlService.generateUrl(longUrl), HttpStatus.OK);
     }
 
+    @GetMapping("/{shortUrl}")
+    public RedirectView redirectUrl(@PathVariable String shortUrl) {
+        String longUrl = urlService.getLongUrl(shortUrl);
+        if (longUrl != null) {
+            return new RedirectView(longUrl);
+        } else {
+            return new RedirectView("/error");
+        }
+    }
 }
