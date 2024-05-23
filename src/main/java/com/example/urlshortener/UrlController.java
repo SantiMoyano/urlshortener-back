@@ -20,11 +20,7 @@ public class UrlController {
 
     @GetMapping("/{shortUrl}")
     public RedirectView redirectUrl(@PathVariable String shortUrl) {
-        String longUrl = urlService.getLongUrl(shortUrl);
-        if (longUrl != null) {
-            return new RedirectView(longUrl);
-        } else {
-            return new RedirectView("/error");
-        }
+        String redirectUrl = urlService.getRedirectUrl(shortUrl);
+        return new RedirectView(redirectUrl);
     }
 }

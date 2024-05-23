@@ -74,4 +74,31 @@ public class UrlServiceTest {
 
         assertNull(result);
     }
+
+    @Test
+    public void testGetRedirectUrl() {
+        String shortUrl = "abcd1234";
+        String longUrl = "https://www.example.com";
+
+        Url url = new Url();
+        url.setShortUrl(shortUrl);
+        url.setLongUrl(longUrl);
+
+        when(urlRepository.findByShortUrl(shortUrl)).thenReturn(url);
+
+        String result = urlService.getRedirectUrl(shortUrl);
+
+        assertEquals(longUrl, result);
+    }
+
+    @Test
+    public void testGetRedirectUrlNotFound() {
+        String shortUrl = "abcd1234";
+
+        when(urlRepository.findByShortUrl(shortUrl)).thenReturn(null);
+
+        String result = urlService.getRedirectUrl(shortUrl);
+
+        assertEquals("/error", result);
+    }
 }

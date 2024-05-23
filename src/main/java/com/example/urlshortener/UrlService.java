@@ -28,4 +28,9 @@ public class UrlService {
         Url url = urlRepository.findByShortUrl(shortUrl);
         return (url != null) ? url.getLongUrl() : null;
     }
+
+    public String getRedirectUrl(String shortUrl) {
+        String longUrl = getLongUrl(shortUrl);
+        return (longUrl != null) ? longUrl : "/error";
+    }
 }
