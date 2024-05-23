@@ -20,7 +20,7 @@ public class UrlService {
         return newShortUrl;
     }
 
-    private String generateShortUrl() {
+    public String generateShortUrl() {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
