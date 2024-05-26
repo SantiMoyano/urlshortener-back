@@ -11,17 +11,20 @@ public class UrlService {
     @Autowired
     UrlRepository urlRepository;
 
-    public String generateUrl(String longUrl) {
+    public UrlResponse generateUrl(String longUrl) {
         String newShortUrl = generateShortUrl();
         Url newUrl = new Url();
         newUrl.setLongUrl(longUrl);
         newUrl.setShortUrl(newShortUrl);
         urlRepository.save(newUrl);
-        return newShortUrl;
+        UrlResponse response = new UrlResponse();
+        response.setShortUrl(newShortUrl);
+        return response;
     }
 
-    public String generateShortUrl() {
-        return UUID.randomUUID().toString().substring(0, 8);
+    public String getRedirectUrl(String shortUrl) {
+        String longUrl = getLongUrl(shortUrl);
+        return (longUrl != null) ? longUrl : "/error";
     }
 
     public String getLongUrl(String shortUrl) {
@@ -29,8 +32,7 @@ public class UrlService {
         return (url != null) ? url.getLongUrl() : null;
     }
 
-    public String getRedirectUrl(String shortUrl) {
-        String longUrl = getLongUrl(shortUrl);
-        return (longUrl != null) ? longUrl : "/error";
+    public String generateShortUrl() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

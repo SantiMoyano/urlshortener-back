@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@RequestMapping("/api/shorty")
+@RequestMapping("/shorty")
+@CrossOrigin("*")
 public class UrlController {
 
     @Autowired
     UrlService urlService;
 
     @PostMapping
-    public ResponseEntity<String> shortenUrl(@RequestBody String longUrl) {
-        return new ResponseEntity<String>(urlService.generateUrl(longUrl), HttpStatus.OK);
+    public ResponseEntity<UrlResponse> shortenUrl(@RequestBody String longUrl) {
+        return new ResponseEntity<UrlResponse>(urlService.generateUrl(longUrl), HttpStatus.OK);
     }
 
     @GetMapping("/{shortUrl}")
